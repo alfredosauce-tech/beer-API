@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import React, { useState, useEffect } from 'react';
+import Beer from './Beer';
 function App() {
+  const [beers, setBeers] = useState([])
+  useEffect(() => {
+    //
+    fetch('https://api.punkapi.com/v2/beers')
+      // (res) is the response from the fetch... "res.json" is turning it into a object "data"
+      .then((res) => res.json())
+      //data from line 9 is set as beers
+      .then((data) => setBeers(data))
+
+
+  }, [])
+  {/* <ComponentName variable={data we want to send} /> */ }
+  console.log(beers);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {beers.map((beer) => (
+        <Beer beer={beer} />
+
+      )
+
+      )}
+
+
     </div>
   );
 }
